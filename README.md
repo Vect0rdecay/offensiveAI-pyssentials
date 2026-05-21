@@ -10,6 +10,8 @@ Ten Python concepts taught through the lens of attacking AI infrastructure. Each
 - **core_example.py** - The original code snippet demonstrating the Python pattern applied to an offensive AI use case. Short, focused, and annotated.
 - **A standalone tool script** - A separate, self-contained script that builds on the concept in a practical direction against AI infrastructure.
 
+The core examples are code snippets meant to illustrate Python patterns. They are not runnable as-is and need additional logic to execute. The standalone tools are closer to functional but will almost all need modification to work against your specific targets and situation.
+
 ## Topics
 
 | # | Concept |
