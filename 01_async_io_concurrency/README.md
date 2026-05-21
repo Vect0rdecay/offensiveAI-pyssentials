@@ -40,9 +40,13 @@ Tools like [Garak](https://docs.garak.ai/garak/examples/prompt-injection) (NVIDI
 Here's the mapping between the Python primitives and the AI offensive use case:
 
 | Python Primitive | AI Offensive Use |
+
 | `aiohttp.ClientSession` | Maintains a connection pool to the target LLM API — reuses TCP/TLS connections instead of renegotiating per request. LLM APIs (OpenAI, Anthropic, Azure) all serve over HTTPS, so TLS handshake savings are significant. |
+
 | `asyncio.Semaphore` | Caps concurrent requests to stay under the target's rate limit. OpenAI enforces [RPM (requests per minute) and TPM (tokens per minute)](https://platform.openai.com/docs/guides/rate-limits) limits that vary by tier. Hit them and you get 429s that waste time and signal scanning activity. |
+
 | `asyncio.gather` | Fires all prompt injection candidates concurrently and collects results in order. `return_exceptions=True` ensures one bad response doesn't kill the entire batch — critical when some payloads trigger 500s or timeouts. |
+
 | `async with` (context manager) | Ensures the `ClientSession` and `Semaphore` are properly acquired and released, even if a coroutine raises. Leaked connections mean leaked sockets, which means your scan dies at scale. |
 
 ---
